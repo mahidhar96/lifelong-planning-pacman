@@ -232,6 +232,50 @@ class PriorityQueueWithFunction(PriorityQueue):
         "Adds an item to the queue with priority from the priority function"
         PriorityQueue.push(self, item, self.priorityFunction(item))
 
+#for lifelong planning astar
+class PriorityQueueLAS:
+
+    def  __init__(self):
+        self.heap = []
+        self.count = 0
+
+    def top(self):
+        return self.heap[0]
+
+    def topKey(self):
+        if self.isEmpty():
+            return (float('inf'), float('inf'))
+        return self.heap[0][0]
+
+    def insert(self, item, priority):
+        entry = (priority, self.count, item)
+        heapq.heappush(self.heap, entry)
+        self.count += 1
+
+    def pop(self):
+        (_, _, item) = heapq.heappop(self.heap)
+        return item
+
+    def isEmpty(self):
+        return len(self.heap) == 0
+
+    def update(self, item, priority):
+        for index, (p, c, i) in enumerate(self.heap):
+            if i == item:
+                if p <= priority:
+                    break
+                del self.heap[index]
+                self.heap.append((priority, c, item))
+                heapq.heapify(self.heap)
+                break
+        else:
+            self.insert(item, priority)
+
+    def remove(self, state):
+        self.update(state, (float('-inf'), float('-inf')) )
+        a = self.pop()
+
+
 
 def manhattanDistance( xy1, xy2 ):
     "Returns the Manhattan distance between points xy1 and xy2"

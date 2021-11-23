@@ -530,3 +530,156 @@ def mazeDistance(point1, point2, gameState):
     assert not walls[x2][y2], 'point2 is a wall: ' + str(point2)
     prob = PositionSearchProblem(gameState, start=point1, goal=point2, warn=False, visualize=False)
     return len(search.bfs(prob))
+
+
+class AStarPositionSearchProblem(search.SearchProblem):
+    """
+    A * search Problem
+    """
+    def __init__(self, gameState, costFn=lambda x: 1, goal=(1, 1), start=None, warn=True, visualize=True):
+
+        self.walls = gameState.getWalls()
+        self.startState = gameState.getPacmanPosition()
+        if start != None:
+            self.startState = start
+        self.costFn = costFn
+        self.visualize = visualize
+        if warn and (gameState.getNumFood() != 1 or not gameState.hasFood(*goal)):
+            print('Warning: this does not look like a regular search maze')
+        # For display purposes
+        self._visited, self._visitedlist, self._expanded = {}, [], 0  # DO NOT CHANGE
+
+        ## NEW PROPERTIES:
+        # The obstacles are anything that block the cells.
+        self.obstacles = set()
+        self.gameState = gameState
+        # Since, it is a position search problem, we are defineing a food location in
+        # the layout, and setting the goal as the food location.
+        self.goal = gameState.getFood().asList()[0]
+        #  The width and height define the bounds of the layout
+        self.width = self.walls.width
+        self.height = self.walls.height
+        self.visitedCells = {}
+        for state in self.getStates():
+            self.visitedCells[state] = False
+
+    def getStartState(self):
+        return self.startState
+
+    # unused function
+    def isGoalState(self, state):
+        isGoal = state == self.goal
+        # For display purposes only
+        if isGoal and self.visualize:
+            self._visitedlist.append(state)
+            import __main__
+            if '_display' in dir(__main__):
+                # @UndefinedVariable
+                if 'drawExpandedCells' in dir(__main__._display):
+                    __main__._display.drawExpandedCells(
+                        self._visitedlist)  # @UndefinedVariable
+        return isGoal
+
+    def getCostOfActions(self, actions):
+        if actions == None:
+            return 999999
+        x, y = self.getStartState()
+        cost = 0
+        for action in actions:
+            dx, dy = Actions.directionToVector(action)
+            x, y = int(x + dx), int(y + dy)
+            if self.walls[x][y]:
+                return 999999
+            cost += self.costFn((x, y))
+        return cost
+
+    # New functions
+
+    # The method to fetch the goal state
+    def getGoalState(self):
+        return self.goal
+
+    # To calculate the cost of the action.
+    def cost(self, startState, goalState):
+        # If there is an obstacle in the action performed give it
+        # high cost
+        if startState in self.obstacles or goalState in self.obstacles:
+            return float('inf')
+        #  else it is 1
+        return 1
+
+    # since the walls are the obstacles in pacman.
+    def isObstacle(self, state):
+        if state in self.walls.asList():
+            return True
+        return False
+
+    # For simplicity, we are considering the walls around the layout as
+    # boundary and not considering them for replanning.
+    def isBoundary(self, state):
+        x, y = state
+        if x == 0 or x == self.width-1 or y == 0 or y == self.height-1:
+            return True
+        else:
+            return False
+
+    # update the obstacles set when ever an obstacle is found.
+    def insertObstacle(self, obstacle):
+        self.obstacles.add(obstacle)
+
+    # to get the list of all the states in the layout, except the boundaries
+    def getStates(self):
+        states = []
+        for x in range(1, self.width):
+            for y in range(1, self.height):
+                states.append((x, y))
+        return states
+
+    # a slightly modified successors functions.
+    def getSuccessors(self, state):
+        successors = []
+        for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
+            x, y = state
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            nextState = (nextx, nexty)
+            # instead of checking the walls, we are only checking the boundaries
+            if not self.isBoundary(nextState):
+                cost = self.cost(state, nextState)
+                successors.append((nextState, action, cost))
+        # Bookkeeping for display purposes
+        self._expanded += 1  # DO NOT CHANGE
+        if state not in self._visited:
+            self._visited[state] = True
+            self._visitedlist.append(state)
+        return successors
+
+    def getVisitedSuccessors(self, state):
+        successors = []
+        for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
+            x, y = state
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            nextState = (nextx, nexty)
+            # instead of checking the walls, we are only checking the boundaries
+            if not self.isBoundary(nextState):
+                cost = self.cost(state, nextState)
+                successors.append((nextState, action, cost))
+        # Bookkeeping for display purposes
+        if not self.visitedCells[state]:
+            self._expanded += 1  # DO NOT CHANGE
+            if state not in self._visited:
+                self._visited[state] = True
+                self._visitedlist.append(state)
+        self.visitedCells[state] = True
+        return successors
+
+    # Visualize the expanded nodes path. Red -> Grey Transition
+    def printPath(self,path):
+        import __main__
+        __main__._display.drawExpandedCells(path)
+
+    # To show the obstacles that are expanded. Green blocks around the obstacles.
+    def drawObstacles(self):
+        import __main__
+        __main__._display.drawObstacles(list(self.obstacles))
