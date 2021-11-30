@@ -228,38 +228,33 @@ def getActions(path):
 
 def dStarSearch(problem, heuristic=nullHeuristic):
     start_time = datetime.now()
-    # nodes = []
     openset = util.PriorityQueue()
     rhs, gVal = {}, {}
     km = 0
-    #initiating start and goal state
+    #setting startState and goalState
     start, goal = problem.getStartState(), problem.getGoalState()
     endpath = []
 
-    #initializing all nodes with gval and rhs value to infinity and final node with rhs value zero
+    #setting gVal and rhs values of nodes to infinity
     def initilize(allStates):#allStates = problem.getAllStates()
         for state in allStates:
             rhs[state] = gVal[state] = math.inf
+        #goal node (from where the seach will start, will have rhs as 0)
         rhs[goal] = 0
-        #as goal state is inconsistent, pushing goal state in Openset priority queue
+        #pushing goal state in Openset priority queue(considered incosistent as this is where the search starts from)
         openset.push(goal,calculateKey(goal))
 
-    #assigning kmod to zero when agent is on start node
-    #removing this as this is causing looping for certain visited nodes
-    def km0():
-        nonlocal km
-        km=0
-
-    #updating the key as per gval, rhs and mahhatten distance
+    #calculating the keys for everyn node in the new format
+    #first with heuristic and key modifier, second with only distance
     def calculateKey(s):
-        #we are using manhattan distance as heuristic
+        #using non local km to access km initialized in dstar
         nonlocal km
-        distance_travelled = util.manhattanDistance(s, start)
-        direct = (min(gVal[s], rhs[s]) + distance_travelled+ km, min(gVal[s], rhs[s]))
-        # km0()
+        #HEURISTIC: change the heuristic here for evaluations
+        heuristic = util.manhattanDistance(s, start)
+        direct = (min(gVal[s], rhs[s]) + heuristic + km, min(gVal[s], rhs[s]))
         return direct
 
-    #updating the gval and rhs value at each vertex with iterations
+    #check for inconsistencies and update gVal and rhs for the state
     def updateVertex(next_state):
         if not(next_state == goal):
             temp = math.inf
@@ -268,13 +263,14 @@ def dStarSearch(problem, heuristic=nullHeuristic):
                 new_gval = gVal[successor] + cost
                 temp = min(temp, new_gval)
             rhs[next_state] = temp
-        #removing consistent node from openset queue
+        #removing node from openset queue as it is consistent and discovered
         openset.remove(next_state)
-        if gVal[next_state] != rhs[next_state]:
-            #pushing inconsistent node in openset queue
+        if gVal[next_state] != rhs[next_state]:#checking inconsistency
+            #pushing node back openset queue if node inconsistent, calculate key again
             openset.push(next_state, calculateKey(next_state))
 
-    #finding the shortest path
+    #Initial shortest path from goal to start, without any knowledge
+    #KnownWalls = []
     def computeShortestPath():
         # print(rhs[start], gVal[start],openset.peek()[0], calculateKey(start),)     
         while openset.peek()[0] < calculateKey(start) or rhs[start] != gVal[start]:
@@ -287,7 +283,7 @@ def dStarSearch(problem, heuristic=nullHeuristic):
                 next_states = problem.getSuccessors(u, walls = False)
                 for successor, _,_ in next_states:
                     updateVertex(successor)
-            else:  # underestimate recalculate next states as well
+            else:  # underestimate recalculate and propagate to next states as well
                 gVal[u] = math.inf
                 updateVertex(u)
                 next_states = problem.getSuccessors(u, walls = False)
@@ -295,38 +291,45 @@ def dStarSearch(problem, heuristic=nullHeuristic):
                 for successor, _,_ in next_states:
                     updateVertex(successor)
 
-    slast = start
+    slastVisited = start
     initilize(problem.getAllStates())
     computeShortestPath()
     print("Start",start)
     print("Goal", goal)
-    fluctuatingpath = []
     while start != goal:
         minimum = math.inf
-        minimumState = None
-        fluctuatingpath.append(start)
+        #maintain optimal state/ state with min cost
+        optimalState = None
         next_states = problem.getSuccessors(start,walls = False)
         for successor, action ,cost in next_states:
             updatedCost = gVal[successor]+cost
+            #update optimalState
             if updatedCost<minimum:
                 minimum = updatedCost
-                minimumState = successor
-        #checking for walls/obstacles at state or not
-        if problem.isThereWall(minimumState) == True:
+                optimalState = successor
+        #checking for walls/obstacles
+        if problem.isThereWall(optimalState) == True:
             # if there is a wall adding it to knownWalls
+            problem.addWall(optimalState)
+            # update key modifier, to give the remaining nodes
+            # more weight, so that this path will have lesser 
+            # probability to be chosen
+            km =  km + util.manhattanDistance(slastVisited,start)
+            # assigning start again as start will change as pacman discovers
+            # new paths
+            slastVisited = start
+            #now update the state value and queue
+            updateVertex(optimalState)
             # recomputing the path with known walls
-            problem.addWall(minimumState)
-            km =  km + util.manhattanDistance(slast,start)
-            slast = start
-            updateVertex(minimumState)
-            fluctuatingpath=[]
             computeShortestPath()
-        else:
+        else: #no walls continue in the path
             endpath.append(start)
-            start = minimumState
-            fluctuatingpath.append(start)
+            start = optimalState
 
+    #while is skipping he goal, so adding it here
     endpath.append(goal)
+
+    #converting paths to actions
     actions = getActions(endpath)
     stop_time = datetime.now()
     #execution time
@@ -335,8 +338,11 @@ def dStarSearch(problem, heuristic=nullHeuristic):
     print("Length of Path",len(actions))
     print("Number of Obstacles/ Walls",len(problem.knownWalls))
     print("Grid Size ", str(problem.height)+"x"+str(problem.width))
+    
+    #reused from astar lifelong
     problem.printPath(endpath)
     problem.drawObstacles()
+
     return actions
 
 #lifelong planning astar
