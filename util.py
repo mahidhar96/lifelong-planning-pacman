@@ -235,7 +235,7 @@ class PriorityQueueWithFunction(PriorityQueue):
         PriorityQueue.push(self, item, self.priorityFunction(item))
 
 #for lifelong planning astar
-class PriorityQueueLAS:
+class PriorityQueueLPA:
 
     def  __init__(self):
         self.heap = []
@@ -249,7 +249,7 @@ class PriorityQueueLAS:
             return (float('inf'), float('inf'))
         return self.heap[0][0]
 
-    def insert(self, item, priority):
+    def push(self, item, priority):
         entry = (priority, self.count, item)
         heapq.heappush(self.heap, entry)
         self.count += 1
@@ -271,12 +271,11 @@ class PriorityQueueLAS:
                 heapq.heapify(self.heap)
                 break
         else:
-            self.insert(item, priority)
+            self.push(item, priority)
 
     def remove(self, state):
-        self.update(state, (float('-inf'), float('-inf')) )
-        a = self.pop()
-
+        self.update(state, (float('-inf'), float('-inf')))
+        item = self.pop()
 
 
 def manhattanDistance( xy1, xy2 ):

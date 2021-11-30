@@ -22,7 +22,7 @@ from datetime import datetime
 from game import Directions
 from game import Actions
 import math
-from util import PriorityQueueLAS
+from util import PriorityQueueLPA
 
 class SearchProblem:
     """
@@ -340,119 +340,109 @@ def dStarSearch(problem, heuristic=nullHeuristic):
     return actions
 
 #lifelong planning astar
-def lifeLongAStarSearch(problem, heuristic):
+def lifelongPlanningAStarSearch(problem, heuristic):
 
-    # function directly implemented from the paper
     def calculateKey(state):
         g_rhs = min(problem.g[state], problem.rhs[state])
         return (g_rhs + heuristic(state, problem), g_rhs)
 
-    # function directly implemented from the paper
     def initialize():
         for state in problem.getStates():
-            problem.rhs[state] = float('inf')
             problem.g[state] = float('inf')
-        problem.rhs[problem.dynamicStartState] = 0
-        problem.U.insert(problem.dynamicStartState, calculateKey(problem.dynamicStartState))
+            problem.rhs[state] = float('inf')
+        problem.rhs[problem.currentStartState] = 0
+        problem.U.push(problem.currentStartState, calculateKey(problem.currentStartState))
 
-    # function directly implemented from the paper
     def updateVertex(u):
-        if u != problem.dynamicStartState:
-            prevKeys = [float('inf')]
-            for successor, _, cost in problem.getSuccessors(u):
-                prevKeys.append(problem.g[successor] + cost)
-            problem.rhs[u] = min(prevKeys)
-
+        if u != problem.currentStartState:
+            pathCosts = [float('inf')]
+            for successorState, _, cost in problem.getSuccessors(u):
+                pathCosts.append(problem.g[successorState] + cost)
+            problem.rhs[u] = min(pathCosts)
             problem.U.remove(u)
 
-            if problem.g[u] != problem.rhs[u]:
-                problem.U.insert(u, calculateKey(u))
+        if problem.g[u] != problem.rhs[u]:
+            problem.U.push(u, calculateKey(u))
 
-    # function directly implemented from the paper
     def computeShortestPath():
         goal = problem.getGoalState()
         while (problem.U.topKey() < calculateKey(goal)) or (problem.rhs[goal] != problem.g[goal]):
             u = problem.U.pop()
             if problem.g[u] > problem.rhs[u]:
                 problem.g[u] = problem.rhs[u]
-                # the successor function produces a tuple of state, action, cost values
-                for successor, _, _ in problem.getSuccessors(u):
-                    updateVertex(successor)
+                for successorState, _, _ in problem.getSuccessors(u):
+                    updateVertex(successorState)
             else:
                 problem.g[u] = float('inf')
                 updateVertex(u)
-                for successor, _, _ in problem.getSuccessors(u):
-                    updateVertex(successor)
+                for successorState, _, _ in problem.getSuccessors(u):
+                    updateVertex(successorState)
 
-    # After computing the shortest path the g values are updated.
-    # From goal to start we will follow the least g value among
-    # the successors and get the shortest path.
-    def shortestPath():
+    def createPath():
         path = []
         state = (problem.getGoalState(), None)
         path.append(state)
-        while state[0] != problem.dynamicStartState:
-            minimum = float('inf')
-            for successor, action, _ in problem.getSuccessors(state[0]):
-                if minimum > problem.g[successor]:
-                    minimum = problem.g[successor]
-                    # since we are going in reverse direction, we need to reverse the actions.
-                    state = (successor, Actions.reverseDirection(action))
+        while state[0] != problem.currentStartState:
+            tempMin = float('inf')
+            for successor, direction, _ in problem.getSuccessors(state[0]):
+                if tempMin > problem.g[successor]:
+                    tempMin = problem.g[successor]
+                    # Reverse the action direction, since we are going from goal to start.
+                    state = (successor, Actions.reverseDirection(direction))
             path.append(state)
-        # reversing the direction path from start to goal
+        # reverse the list since we calculated path from goal to start here
         return path[::-1]
 
-    def planning():
-        path = shortestPath()
+    def pathPlanning():
+        path = createPath()
         if len(path) == 1 and path[0][0] == problem.getGoalState():
             return True
-        for index in range(len(path) - 1):
-            currentState, currentAction = path[index]
-            nextState, _ = path[index + 1]
-            problem.finalPath.append((currentState, currentAction))
-            print("--> " + str(nextState))
+        for i in range(len(path) - 1):
+            currentState, currentDirection = path[i]
+            nextState, _ = path[i+1]
+            problem.finalPath.append((currentState, currentDirection))
+            print(str(nextState))
             if problem.isObstacle(nextState):
                 print("\nObstacle @ " + str(nextState))
-                print("Replanning...")
-                problem.insertObstacle(nextState)
+                problem.addToObstaclesSet(nextState)
                 updateVertex(nextState)
-                problem.dynamicStartState = currentState
+                problem.currentStartState = currentState
                 return False
             elif nextState == problem.getGoalState():
                 return True
 
     def main():
-        # initializing
-        problem.U = PriorityQueueLAS()
+        # initialization
+        problem.U = PriorityQueueLPA()
         problem.g = {}
         problem.rhs = {}
         problem.finalPath = []
-        problem.dynamicStartState = problem.getStartState()
-        # initialize()
+        problem.currentStartState = problem.getStartState()
         stop = False
-        print('The goal position is', problem.getGoalState())
-        print("The path is: ")
-        print(problem.dynamicStartState)
-        while (problem.dynamicStartState != problem.getGoalState()) and not stop:
+        print('Goal position: ', problem.getGoalState())
+        print("Calculated path: ")
+        print(problem.currentStartState)
+
+        while (problem.currentStartState != problem.getGoalState()) and not stop:
             initialize()
             computeShortestPath()
-            stop = planning()
+            stop = pathPlanning()
+
         problem.finalPath.append((problem.getGoalState(), None))
-        print("\nDone Planning")
-        actions = []
+        directions = []
         states = []
         for index in range(len(problem.finalPath[:-1])):
-            currentState, currentAction = problem.finalPath[index]
+            currentState, currentDirection = problem.finalPath[index]
             nextState, _ = problem.finalPath[index + 1]
             if currentState != nextState:
-                actions.append(currentAction)
+                directions.append(currentDirection)
                 states.append(currentState)
+
         problem.drawObstacles()
         problem.printPath(states)
-        print('Path Length: ', len(actions))
-        print('Size of the Layout: ', str(problem.height) + 'x' + str(problem.width))
+        print('Path Length: ', len(directions))
         print('Number of obstacles: ', len(problem.obstacles))
-        return actions
+        return directions
 
     return main()
 
@@ -467,4 +457,4 @@ ucs = uniformCostSearch
 dstar = dStarSearch
 
 #lifelong planning astar
-lastar = lifeLongAStarSearch
+lastar = lifelongPlanningAStarSearch
