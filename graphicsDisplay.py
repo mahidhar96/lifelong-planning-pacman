@@ -428,17 +428,15 @@ class PacmanGraphics:
         y = (self.height  - y)*self.gridSize
         return ( x, y )
 
-    #lifelong planning A*
+    # lifelong planning A*
     def drawObstacles(self, obstacles):
-        obstacleColor = formatColor(100.0/255.0, 255.0/255.0, 100.0/255.0)
+        obstacleColor = formatColor(200.0 / 255.0, 255.0 / 255.0, 200.0 / 255.0)
         self.expandedObstacles = []
         for i, obstacle in enumerate(obstacles):
-            screen = self.to_screen(obstacle)
-            cellColor = obstacleColor
-            cell = square(screen,
-                         0.5*self.gridSize,
-                         color = cellColor,
-                         filled = 0, behind=0)
+            cell = square(self.to_screen(obstacle),
+                          0.5 * self.gridSize,
+                          color=obstacleColor,
+                          filled=0, behind=0)
             self.expandedObstacles.append(cell)
             if self.frameTime < 0:
                 refresh()

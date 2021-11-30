@@ -583,14 +583,16 @@ def mazeDistance(point1, point2, gameState):
     prob = PositionSearchProblem(gameState, start=point1, goal=point2, warn=False, visualize=False)
     return len(search.bfs(prob))
 
-
+# For LPA star
 class AStarPositionSearchProblem(search.SearchProblem):
     """
     A * search Problem
     """
     def __init__(self, gameState, costFn=lambda x: 1, goal=(1, 1), start=None, warn=True, visualize=True):
-
         self.walls = gameState.getWalls()
+        self.width = self.walls.width
+        self.height = self.walls.height
+
         self.startState = gameState.getPacmanPosition()
         if start != None:
             self.startState = start
@@ -601,36 +603,16 @@ class AStarPositionSearchProblem(search.SearchProblem):
         # For display purposes
         self._visited, self._visitedlist, self._expanded = {}, [], 0  # DO NOT CHANGE
 
-        ## NEW PROPERTIES:
-        # The obstacles are anything that block the cells.
+        # Additional code for LPA star search:
         self.obstacles = set()
         self.gameState = gameState
-        # Since, it is a position search problem, we are defineing a food location in
-        # the layout, and setting the goal as the food location.
         self.goal = gameState.getFood().asList()[0]
-        #  The width and height define the bounds of the layout
-        self.width = self.walls.width
-        self.height = self.walls.height
-        self.visitedCells = {}
+        self.visitedStates = {}
         for state in self.getStates():
-            self.visitedCells[state] = False
+            self.visitedStates[state] = False
 
     def getStartState(self):
         return self.startState
-
-    # unused function
-    def isGoalState(self, state):
-        isGoal = state == self.goal
-        # For display purposes only
-        if isGoal and self.visualize:
-            self._visitedlist.append(state)
-            import __main__
-            if '_display' in dir(__main__):
-                # @UndefinedVariable
-                if 'drawExpandedCells' in dir(__main__._display):
-                    __main__._display.drawExpandedCells(
-                        self._visitedlist)  # @UndefinedVariable
-        return isGoal
 
     def getCostOfActions(self, actions):
         if actions == None:
@@ -645,93 +627,63 @@ class AStarPositionSearchProblem(search.SearchProblem):
             cost += self.costFn((x, y))
         return cost
 
-    # New functions
-
-    # The method to fetch the goal state
-    def getGoalState(self):
-        return self.goal
-
-    # To calculate the cost of the action.
-    def cost(self, startState, goalState):
-        # If there is an obstacle in the action performed give it
-        # high cost
-        if startState in self.obstacles or goalState in self.obstacles:
-            return float('inf')
-        #  else it is 1
-        return 1
-
-    # since the walls are the obstacles in pacman.
+    # Additional methods for LPA star search:
+    # Every wall is an obstacle
     def isObstacle(self, state):
         if state in self.walls.asList():
             return True
         return False
 
-    # For simplicity, we are considering the walls around the layout as
-    # boundary and not considering them for replanning.
+    # Boundary walls will not be considered as obstacles to simplify replanning.
     def isBoundary(self, state):
         x, y = state
-        if x == 0 or x == self.width-1 or y == 0 or y == self.height-1:
+        if x == 0 or x == self.width - 1 or y == 0 or y == self.height - 1:
             return True
         else:
             return False
 
-    # update the obstacles set when ever an obstacle is found.
-    def insertObstacle(self, obstacle):
+    def getGoalState(self):
+        return self.goal
+
+    def addToObstaclesSet(self, obstacle):
         self.obstacles.add(obstacle)
 
-    # to get the list of all the states in the layout, except the boundaries
+    # If taking the current action leads to an obstacle state, then give it a cost of infinity
+    def getCost(self, currentState, nextState):
+        if currentState in self.obstacles or nextState in self.obstacles:
+            return float('inf')
+        return 1
+
+    # We are not going to consider here the boundaries of the layout
     def getStates(self):
-        states = []
+        listOfStates = []
         for x in range(1, self.width):
             for y in range(1, self.height):
-                states.append((x, y))
-        return states
+                listOfStates.append((x, y))
+        return listOfStates
 
-    # a slightly modified successors functions.
+    # We are not going to check for walls here since they are the obstacles
     def getSuccessors(self, state):
         successors = []
-        for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
+        for direction in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
             x, y = state
-            dx, dy = Actions.directionToVector(action)
+            dx, dy = Actions.directionToVector(direction)
             nextx, nexty = int(x + dx), int(y + dy)
             nextState = (nextx, nexty)
-            # instead of checking the walls, we are only checking the boundaries
             if not self.isBoundary(nextState):
-                cost = self.cost(state, nextState)
-                successors.append((nextState, action, cost))
-        # Bookkeeping for display purposes
+                cost = self.getCost(state, nextState)
+                successors.append((nextState, direction, cost))
         self._expanded += 1  # DO NOT CHANGE
         if state not in self._visited:
             self._visited[state] = True
             self._visitedlist.append(state)
         return successors
 
-    def getVisitedSuccessors(self, state):
-        successors = []
-        for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
-            x, y = state
-            dx, dy = Actions.directionToVector(action)
-            nextx, nexty = int(x + dx), int(y + dy)
-            nextState = (nextx, nexty)
-            # instead of checking the walls, we are only checking the boundaries
-            if not self.isBoundary(nextState):
-                cost = self.cost(state, nextState)
-                successors.append((nextState, action, cost))
-        # Bookkeeping for display purposes
-        if not self.visitedCells[state]:
-            self._expanded += 1  # DO NOT CHANGE
-            if state not in self._visited:
-                self._visited[state] = True
-                self._visitedlist.append(state)
-        self.visitedCells[state] = True
-        return successors
-
-    # Visualize the expanded nodes path. Red -> Grey Transition
+    # To print the path through heat map in the layout
     def printPath(self,path):
         import __main__
         __main__._display.drawExpandedCells(path)
 
-    # To show the obstacles that are expanded. Green blocks around the obstacles.
     def drawObstacles(self):
         import __main__
         __main__._display.drawObstacles(list(self.obstacles))
