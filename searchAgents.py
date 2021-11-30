@@ -171,7 +171,7 @@ class PositionSearchProblem(search.SearchProblem):
         self.startState = gameState.getPacmanPosition()
         if start != None: self.startState = start
         self.goal = goal
-        self.costFn = self.cost
+        self.costFn = costFn
         self.visualize = visualize
         if warn and (gameState.getNumFood() != 1 or not gameState.hasFood(*goal)):
             print('Warning: this does not look like a regular search maze')
@@ -299,7 +299,7 @@ class PositionSearchProblem(search.SearchProblem):
 
             if self.walls[nextx][nexty] and self.searchType != "dstar": 
                 return 999999
-            cost += self.costFn((x,y),(nextx,nexty))
+            cost += self.costFn((x,y))
         return cost
 
 class StayEastSearchAgent(SearchAgent):

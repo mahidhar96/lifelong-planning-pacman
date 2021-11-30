@@ -190,6 +190,8 @@ class PriorityQueue:
     #new
     #get the key of the first element, without popping
     def peek(self):
+        if self.isEmpty():
+            return ((float('inf'), float('inf')),)
         return self.heap[0]
 
     #new
