@@ -206,26 +206,6 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                 #priorities are not just based on costs, but also on the added heuristics
                 openSet.push((nextState, actionsToState, updatedPriority), pathHeuristicCost)
 
-#new
-def getActions(path):
-    actions = []
-    x,y = path[0]
-    for i in range(1,len(path)):
-        xi,yi = path[i]
-        #X val compare
-        if x > xi:
-            actions.append(Directions.WEST)
-        elif x<xi:
-            actions.append(Directions.EAST)
-        #y val compare
-        if y<yi:
-            actions.append(Directions.NORTH)
-        elif y>yi:
-            actions.append(Directions.SOUTH)
-        x = xi
-        y = yi
-    return actions
-
 def dStarSearch(problem, heuristic=nullHeuristic):
     start_time = datetime.now()
     openset = util.PriorityQueue()
@@ -234,6 +214,7 @@ def dStarSearch(problem, heuristic=nullHeuristic):
     #setting startState and goalState
     start, goal = problem.getStartState(), problem.getGoalState()
     endpath = []
+    actions = []
 
     #setting gVal and rhs values of nodes to infinity
     def initilize(allStates):#allStates = problem.getAllStates()
@@ -291,7 +272,8 @@ def dStarSearch(problem, heuristic=nullHeuristic):
                 for successor, _,_ in next_states:
                     updateVertex(successor)
 
-    slastVisited = start
+    slast = start
+    nextAction = None
     initilize(problem.getAllStates())
     computeShortestPath()
     print("Start",start)
@@ -315,6 +297,7 @@ def dStarSearch(problem, heuristic=nullHeuristic):
             if updatedCost<minimum:
                 minimum = updatedCost
                 optimalState = successor
+                nextAction = action
         # checking for walls/obstacles
         if problem.isThereWall(optimalState) == True:
             # if there is a wall adding it to knownWalls
@@ -322,23 +305,23 @@ def dStarSearch(problem, heuristic=nullHeuristic):
             # update key modifier, to give the remaining nodes
             # more weight, so that this path will have lesser 
             # probability to be chosen
-            km =  km + util.manhattanDistance(slastVisited,start)
+            km =  km + util.manhattanDistance(slast,start)
             # assigning start again as start will change as pacman discovers
             # new paths
-            slastVisited = start
+            slast = start
             #now update the state value and queue
             updateVertex(optimalState)
             # recomputing the path with known walls
             computeShortestPath()
         else: #no walls continue in the path
             endpath.append(start)
+            actions.append(nextAction)
             start = optimalState
 
     #while is skipping he goal, so adding it here
     endpath.append(goal)
+    actions.append(nextAction)
 
-    #converting paths to actions
-    actions = getActions(endpath)
     stop_time = datetime.now()
     #execution time, for more accurate representation
     elapsed_time = stop_time - start_time
