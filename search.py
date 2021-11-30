@@ -296,10 +296,18 @@ def dStarSearch(problem, heuristic=nullHeuristic):
     computeShortestPath()
     print("Start",start)
     print("Goal", goal)
+    # IMPORTANT:
+    # This is where the code slightly differs from the paper
+    # We are not using chaging the path or wall structure as
+    # Pacman is moving, instead we are blinding pacman, by 
+    # restricting him to only immediate actions and not letting
+    # pacman see walls. 
     while start != goal:
         minimum = math.inf
-        #maintain optimal state/ state with min cost
+        # maintain optimal state/ state with min cost
         optimalState = None
+        # walls is set to falls for algorithm implementation
+        # getSuccessors will return all actions including walls
         next_states = problem.getSuccessors(start,walls = False)
         for successor, action ,cost in next_states:
             updatedCost = gVal[successor]+cost
@@ -307,7 +315,7 @@ def dStarSearch(problem, heuristic=nullHeuristic):
             if updatedCost<minimum:
                 minimum = updatedCost
                 optimalState = successor
-        #checking for walls/obstacles
+        # checking for walls/obstacles
         if problem.isThereWall(optimalState) == True:
             # if there is a wall adding it to knownWalls
             problem.addWall(optimalState)
@@ -332,7 +340,7 @@ def dStarSearch(problem, heuristic=nullHeuristic):
     #converting paths to actions
     actions = getActions(endpath)
     stop_time = datetime.now()
-    #execution time
+    #execution time, for more accurate representation
     elapsed_time = stop_time - start_time
     print("Execution Time: {} seconds".format(elapsed_time))
     print("Length of Path",len(actions))
