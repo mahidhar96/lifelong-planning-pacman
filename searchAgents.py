@@ -40,6 +40,7 @@ from game import Actions
 import util
 import time
 import search
+import math
 
 class GoWestAgent(Agent):
     "An agent that goes West until it can't."
@@ -153,8 +154,13 @@ class PositionSearchProblem(search.SearchProblem):
         goal: A position in the gameState
         """
         self.walls = gameState.getWalls()
+        #  The width and height define the bounds of the layout
+        self.width = self.walls.width
+        self.height = self.walls.height
+        self.knownWalls = []#obstacles in this case
         xwalls = []
         ywalls = []
+        self.searchType = "dstar"
         for position in self.walls.asList():
             xwalls.append(position[0])
             ywalls.append(position[1])
@@ -165,7 +171,7 @@ class PositionSearchProblem(search.SearchProblem):
         self.startState = gameState.getPacmanPosition()
         if start != None: self.startState = start
         self.goal = goal
-        self.costFn = costFn
+        self.costFn = self.cost
         self.visualize = visualize
         if warn and (gameState.getNumFood() != 1 or not gameState.hasFood(*goal)):
             print('Warning: this does not look like a regular search maze')
@@ -180,9 +186,25 @@ class PositionSearchProblem(search.SearchProblem):
     def getGoalState(self):
         return self.goal
     
-    def isThereWall(self,wall):
-        return True if wall in self.walls else False
+    #dstar check for walls
+    def isThereWall(self,state):
+        if state in self.walls.asList():
+            return True
+        return False
     
+    #dstar add to known walls
+    def addWall(self,s):
+        self.knownWalls.append(s)
+    
+    #return high cost if there is a knownWall to avoid it
+    def cost(self, startState, endState):
+        # If there is an obstacle in the action performed give it
+        # high cost
+        if startState in self.knownWalls or endState in self.knownWalls:
+            return math.inf
+        #  else it is 1
+        return 1
+
     #dstar states
     def getAllStates(self):
         states =[]
@@ -203,8 +225,16 @@ class PositionSearchProblem(search.SearchProblem):
                     __main__._display.drawExpandedCells(self._visitedlist) #@UndefinedVariable
 
         return isGoal
+    
+    # to check for walls around the layout as edges
+    def isEdge(self, state):
+        x, y = state
+        if x == 0 or x == self.width-1 or y == 0 or y == self.height-1:
+            return True
+        else:
+            return False
 
-    def getSuccessors(self, state):
+    def getSuccessors(self, state,walls = True):
         """
         Returns successor states, the actions they require, and a cost of 1.
 
@@ -221,10 +251,18 @@ class PositionSearchProblem(search.SearchProblem):
             x,y = state
             dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y + dy)
-            if not self.walls[nextx][nexty]:
-                nextState = (nextx, nexty)
-                cost = self.costFn(nextState)
-                successors.append( ( nextState, action, cost) )
+            nextState = (nextx, nexty)
+            #if walls is true it will work  like a normal position search problem
+            #else it will only consider edges
+            if (walls):
+                if not(self.walls[nextx][nexty]):
+                    cost = self.cost(state,nextState)
+                    successors.append( ( nextState, action, cost) )
+            else:
+                if not self.isEdge(nextState):
+                    cost = self.cost(state,nextState)
+                    successors.append( ( nextState, action, cost) )
+                
 
         # Bookkeeping for display purposes
         self._expanded += 1 # DO NOT CHANGE
@@ -233,6 +271,18 @@ class PositionSearchProblem(search.SearchProblem):
             self._visitedlist.append(state)
 
         return successors
+    
+    ##Reusing printPath from AStarLifeLongPositionSearch
+
+    # Visualize the expanded nodes path. Red -> Grey Transition
+    def printPath(self,path):
+        import __main__
+        __main__._display.drawExpandedCells(path)
+
+    # To show the obstacles that are expanded. Green blocks around the obstacles.
+    def drawObstacles(self):
+        import __main__
+        __main__._display.drawObstacles(list(self.knownWalls))
 
     def getCostOfActions(self, actions):
         """
@@ -245,9 +295,11 @@ class PositionSearchProblem(search.SearchProblem):
         for action in actions:
             # Check figure out the next state and see whether its' legal
             dx, dy = Actions.directionToVector(action)
-            x, y = int(x + dx), int(y + dy)
-            if self.walls[x][y]: return 999999
-            cost += self.costFn((x,y))
+            nextx, nexty = int(x + dx), int(y + dy)
+
+            if self.walls[nextx][nexty] and self.searchType != "dstar": 
+                return 999999
+            cost += self.costFn((x,y),(nextx,nexty))
         return cost
 
 class StayEastSearchAgent(SearchAgent):

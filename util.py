@@ -194,7 +194,7 @@ class PriorityQueue:
 
     #new
     def remove(self,item):
-        priority = (float('-inf'),)
+        priority = (float('-inf'),float('-inf'))
         self.update(item, priority)
         a = self.pop()
 
