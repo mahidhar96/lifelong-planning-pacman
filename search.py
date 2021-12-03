@@ -443,6 +443,136 @@ def lifelongPlanningAStarSearch(problem, heuristic):
 
     return main()
 
+def dStarSearchOptimized(problem, heuristic=nullHeuristic):
+    start_time = datetime.now()
+    openset = util.PriorityQueue()
+    rhs, gVal = {}, {}
+    km = 0
+    #setting startState and goalState
+    start, goal = problem.getStartState(), problem.getGoalState()
+    endpath = []
+    actions = []
+
+    #setting gVal and rhs values of nodes to infinity
+    def initilize(allStates):#allStates = problem.getAllStates()
+        for state in allStates:
+            rhs[state] = gVal[state] = math.inf
+        #goal node (from where the seach will start, will have rhs as 0)
+        rhs[goal] = 0
+        #pushing goal state in Openset priority queue(considered incosistent as this is where the search starts from)
+        openset.push(goal,calculateKey(goal))
+
+    #calculating the keys for everyn node in the new format
+    #first with heuristic and key modifier, second with only distance
+    def calculateKey(s):
+        #using non local km to access km initialized in dstar
+        nonlocal km
+        #HEURISTIC: change the heuristic here for evaluations
+        heuristic = util.manhattanDistance(s, start)
+        direct = (min(gVal[s], rhs[s]) + heuristic + km, min(gVal[s], rhs[s]))
+        return direct
+
+    #check for inconsistencies and update gVal and rhs for the state
+    def updateVertex(next_state):
+        if not(next_state == goal):
+            temp = math.inf
+            next_states = problem.getSuccessors(next_state,walls = False)
+            for successor,direction, cost in next_states:
+                new_gval = gVal[successor] + cost
+                temp = min(temp, new_gval)
+            rhs[next_state] = temp
+        #removing node from openset queue as it is consistent and discovered
+        openset.remove(next_state)
+        if gVal[next_state] != rhs[next_state]:#checking inconsistency
+            #pushing node back openset queue if node inconsistent, calculate key again
+            openset.push(next_state, calculateKey(next_state))
+
+    #Initial shortest path from goal to start, without any knowledge
+    #KnownWalls = []
+    def computeShortestPath():
+        # print(rhs[start], gVal[start],openset.peek()[0], calculateKey(start),)     
+        #early termination, doesn't wait till rhs[start] becomes gVal[start]
+        while openset.peek()[0] < calculateKey(start) or rhs[start] > gVal[start]:
+            kold = openset.peek()[0]
+            u = openset.pop()
+            if kold < calculateKey(u): #correct estimate push it
+                openset.push(u,calculateKey(u))
+            elif gVal[u] > rhs[u]: # overestimate fix it
+                gVal[u] = rhs[u]
+                next_states = problem.getSuccessors(u, walls = False)
+                for successor, _,_ in next_states:
+                    updateVertex(successor)
+            else:  # underestimate recalculate and propagate to next states as well
+                gVal[u] = math.inf
+                updateVertex(u)
+                next_states = problem.getSuccessors(u, walls = False)
+                #propagation of changes
+                for successor, _,_ in next_states:
+                    updateVertex(successor)
+
+    slast = start
+    nextAction = None
+    initilize(problem.getAllStates())
+    computeShortestPath()
+    print("Start",start)
+    print("Goal", goal)
+    # IMPORTANT:
+    # This is where the code slightly differs from the paper
+    # We are not using chaging the path or wall structure as
+    # Pacman is moving, instead we are blinding pacman, by 
+    # restricting him to only immediate actions and not letting
+    # pacman see walls. 
+    while start != goal:
+        minimum = math.inf
+        # maintain optimal state/ state with min cost
+        optimalState = None
+        # walls is set to falls for algorithm implementation
+        # getSuccessors will return all actions including walls
+        next_states = problem.getSuccessors(start,walls = False)
+        for successor, action ,cost in next_states:
+            updatedCost = gVal[successor]+cost
+            #update optimalState
+            if updatedCost<minimum:
+                minimum = updatedCost
+                optimalState = successor
+                nextAction = action
+        # checking for walls/obstacles
+        if problem.isThereWall(optimalState) == True:
+            # if there is a wall adding it to knownWalls
+            problem.addWall(optimalState)
+            # update key modifier, to give the remaining nodes
+            # more weight, so that this path will have lesser 
+            # probability to be chosen
+            km =  km + util.manhattanDistance(slast,start)
+            # assigning start again as start will change as pacman discovers
+            # new paths
+            slast = start
+            #now update the state value and queue
+            updateVertex(optimalState)
+            # recomputing the path with known walls
+            computeShortestPath()
+        else: #no walls continue in the path
+            endpath.append(start)
+            actions.append(nextAction)
+            start = optimalState
+
+    #while is skipping he goal, so adding it here
+    endpath.append(goal)
+    actions.append(nextAction)
+
+    stop_time = datetime.now()
+    #execution time, for more accurate representation
+    elapsed_time = stop_time - start_time
+    print("Execution Time: {} seconds".format(elapsed_time))
+    print("Length of Path",len(actions))
+    print("Number of Obstacles/ Walls",len(problem.knownWalls))
+    print("Grid Size ", str(problem.height)+"x"+str(problem.width))
+    
+    #reused from astar lifelong
+    problem.printPath(endpath)
+    problem.drawObstacles()
+
+    return actions
 
 # Abbreviations
 bfs = breadthFirstSearch
@@ -452,6 +582,9 @@ ucs = uniformCostSearch
 
 #dstar
 dstar = dStarSearch
+
+#dstarOptimized
+dstaropt = dStarSearchOptimized
 
 #lifelong planning astar
 lastar = lifelongPlanningAStarSearch
