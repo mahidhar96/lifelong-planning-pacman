@@ -325,6 +325,8 @@ def dStarSearch(problem, heuristic=nullHeuristic):
     stop_time = datetime.now()
     #execution time, for more accurate representation
     elapsed_time = stop_time - start_time
+    # print("====dstar")
+    # print(str(problem.height)+" "+str(elapsed_time) +" "+str(len(actions))+" "+str(len(problem.knownWalls))+" ")
     print("Execution Time: {} seconds".format(elapsed_time))
     print("Length of Path",len(actions))
     print("Number of Obstacles/ Walls",len(problem.knownWalls))
@@ -448,32 +450,39 @@ def dStarSearchOptimized(problem, heuristic=nullHeuristic):
     openset = util.PriorityQueue()
     rhs, gVal = {}, {}
     km = 0
-    #setting startState and goalState
+    # setting startState and goalState
     start, goal = problem.getStartState(), problem.getGoalState()
     endpath = []
     actions = []
+    # HEURISTIC: change the heuristic here for evaluations
+    heuristic = util.manhattanDistance
 
-    #setting gVal and rhs values of nodes to infinity
+    # setting gVal and rhs values of nodes to infinity
     def initilize(allStates):#allStates = problem.getAllStates()
         for state in allStates:
             rhs[state] = gVal[state] = math.inf
-        #goal node (from where the seach will start, will have rhs as 0)
+        # goal node (from where the seach will start, will have rhs as 0)
         rhs[goal] = 0
-        #pushing goal state in Openset priority queue(considered incosistent as this is where the search starts from)
-        openset.push(goal,calculateKey(goal))
+        # pushing goal state in Openset priority queue(considered incosistent as this is where the search starts from)
+        # A minor change here for optimization, we calculate the gVal, rhs and keymodifier are 0 for the goal node,
+        # we directly push heuristic and 0 for this node.
+        openset.push(goal,(heuristic(start,goal),0))
 
-    #calculating the keys for everyn node in the new format
-    #first with heuristic and key modifier, second with only distance
+    # calculating the keys for everyn node in the new format
+    # first with heuristic and key modifier, second with only distance
     def calculateKey(s):
-        #using non local km to access km initialized in dstar
+        # using non local km to access km initialized in dstar
         nonlocal km
-        #HEURISTIC: change the heuristic here for evaluations
-        heuristic = util.manhattanDistance(s, start)
-        direct = (min(gVal[s], rhs[s]) + heuristic + km, min(gVal[s], rhs[s]))
+        heuristicVal = heuristic(s, start)
+        direct = (min(gVal[s], rhs[s]) + heuristicVal + km, min(gVal[s], rhs[s]))
         return direct
 
     #check for inconsistencies and update gVal and rhs for the state
     def updateVertex(next_state):
+        # In dstar Optimized, this part of the code till line 493 is multiple times 
+        # in computeShortestpath and in the main driver code. Which was kind of
+        # inefficient and was increasing the time taken for path computation in larger
+        # graphs. So I left it here for better run times.
         if not(next_state == goal):
             temp = math.inf
             next_states = problem.getSuccessors(next_state,walls = False)
@@ -481,6 +490,14 @@ def dStarSearchOptimized(problem, heuristic=nullHeuristic):
                 new_gval = gVal[successor] + cost
                 temp = min(temp, new_gval)
             rhs[next_state] = temp
+        ######
+
+        # In dstar optimized there are multiple checks which were checking if the
+        # node was present in the queue, to add or remove it, since this is already
+        # managed by the existing priority queue, I left it as is. The code with
+        # multiple checks is adding a significant overhead for larger graphs, as 
+        # each check takes log n time in the queue.
+
         #removing node from openset queue as it is consistent and discovered
         openset.remove(next_state)
         if gVal[next_state] != rhs[next_state]:#checking inconsistency
@@ -491,24 +508,58 @@ def dStarSearchOptimized(problem, heuristic=nullHeuristic):
     #KnownWalls = []
     def computeShortestPath():
         # print(rhs[start], gVal[start],openset.peek()[0], calculateKey(start),)     
-        #early termination, doesn't wait till rhs[start] becomes gVal[start]
+        # dstar optimized early termination, doesn't wait till rhs[start] becomes gVal[start]
         while openset.peek()[0] < calculateKey(start) or rhs[start] > gVal[start]:
-            kold = openset.peek()[0]
+            kold = openset.peek()[0]#topKey
+            
+            # not using top, which basically get's the top element of the priorityQueue
+            # or openset.peek()[0] instead of removing it here, it checks the nodes and
+            # removes it ony when gVal = rhs, later this node might be added back, if
+            # called through updateVertex, which is already the present functionality
             u = openset.pop()
-            if kold < calculateKey(u): #correct estimate push it
-                openset.push(u,calculateKey(u))
+            
+            # calclating and saving knew, to reuse it
+            knew = calculateKey(u)
+            # print(u,rhs[u],gVal[u],kold,knew)
+            # print(n[-1])
+            if kold < knew: #correct estimate push it
+                # replacing insert wth update, as update will add the node, if it is not present.
+                # this change improved the running time by 3%
+                openset.update(u,knew)
             elif gVal[u] > rhs[u]: # overestimate fix it
                 gVal[u] = rhs[u]
+                # dstar Optimized: removing the node as it is consistent and will be explored
+                openset.remove(u)
+                
                 next_states = problem.getSuccessors(u, walls = False)
                 for successor, _,_ in next_states:
                     updateVertex(successor)
+                
+                # the following code is removed as updateVertex manages this
+                #     if not(successor == goal):
+                #         temp = math.inf
+                #         next_states = problem.getSuccessors(successor,walls = False)
+                #         for successor,direction, cost in next_states:
+                #             new_gval = gVal[successor] + cost
+                #             temp = min(temp, new_gval)
+                # rhs[successor] = temp
+                # updateVertex(successor)
             else:  # underestimate recalculate and propagate to next states as well
+                # gOld = gVal[u]
                 gVal[u] = math.inf
+                
                 updateVertex(u)
-                next_states = problem.getSuccessors(u, walls = False)
-                #propagation of changes
-                for successor, _,_ in next_states:
-                    updateVertex(successor)
+                states = problem.getSuccessors(u, walls = False)
+                for state, _,cost in states:
+                    # this part is managed by the updateVertex, hence removed.
+                    # if not(rhs[state] == (cost + gOld)):
+                    #     temp = math.inf
+                    #     next_states = problem.getSuccessors(successor,walls = False)
+                    #     for successor,direction, cost in next_states:
+                    #         new_gval = gVal[successor] + cost
+                    #         temp = min(temp, new_gval)
+                    #     rhs[successor] = temp
+                    updateVertex(state)
 
     slast = start
     nextAction = None
@@ -537,6 +588,8 @@ def dStarSearchOptimized(problem, heuristic=nullHeuristic):
                 optimalState = successor
                 nextAction = action
         # checking for walls/obstacles
+        # walls/obstacles are always added but never removed
+        # in our scenario. 
         if problem.isThereWall(optimalState) == True:
             # if there is a wall adding it to knownWalls
             problem.addWall(optimalState)
@@ -547,7 +600,28 @@ def dStarSearchOptimized(problem, heuristic=nullHeuristic):
             # assigning start again as start will change as pacman discovers
             # new paths
             slast = start
-            #now update the state value and queue
+            # now update the state value and queue
+            
+            # implementation here will slightly differ from the actual
+            # dstar optimised. because old cost in our case will always
+            # be greater than the new cost. As walls are only added and
+            # never removed, so while traversing through a path, distance
+            # to a certain node will only increase but not decrease
+
+            # So, the following part of the algorithm shouldn't make a difference
+            # in our case.
+            # if (costOld > newCost):
+            #     if not(u==goal) rhs(u) = min(rhs(u),c(u,v)+gVal(v))
+
+            #Removed as this is managed by updateVertex
+            # if not(optimalState == goal):
+            #     temp = math.inf
+            #     next_states = problem.getSuccessors(optimalState,walls = False)
+            #     for successor,direction, cost in next_states:
+            #         new_gval = gVal[successor] + cost
+            #         temp = min(temp, new_gval)
+            #     rhs[optimalState] = temp
+            
             updateVertex(optimalState)
             # recomputing the path with known walls
             computeShortestPath()
@@ -563,6 +637,8 @@ def dStarSearchOptimized(problem, heuristic=nullHeuristic):
     stop_time = datetime.now()
     #execution time, for more accurate representation
     elapsed_time = stop_time - start_time
+    # print("====dstaropt")
+    # print(str(problem.height)+" "+str(elapsed_time) +" "+str(len(actions))+" "+str(len(problem.knownWalls))+" ")
     print("Execution Time: {} seconds".format(elapsed_time))
     print("Length of Path",len(actions))
     print("Number of Obstacles/ Walls",len(problem.knownWalls))

@@ -1,0 +1,780 @@
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (9, 1)
+Goal (1, 1)
+====dstaropt
+11 0:00:00.007000 45 18 
+Path found with total cost of 45 in 0.0 seconds
+Search nodes expanded: 627
+Pacman emerges victorious! Score: 466
+Average Score: 466.0
+Scores:        466.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 9)
+Goal (1, 1)
+====dstaropt
+11 0:00:00.001000 13 2 
+Path found with total cost of 13 in 0.0 seconds
+Search nodes expanded: 120
+Pacman emerges victorious! Score: 498
+Average Score: 498.0
+Scores:        498.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (9, 9)
+Goal (1, 1)
+====dstaropt
+11 0:00:00.005999 41 16 
+Path found with total cost of 41 in 0.0 seconds
+Search nodes expanded: 633
+Pacman emerges victorious! Score: 470
+Average Score: 470.0
+Scores:        470.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (19, 1)
+Goal (1, 1)
+====dstaropt
+21 0:00:00.011998 43 16 
+Path found with total cost of 43 in 0.0 seconds
+Search nodes expanded: 874
+Pacman emerges victorious! Score: 468
+Average Score: 468.0
+Scores:        468.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 19)
+Goal (1, 1)
+====dstaropt
+21 0:00:00.015998 55 21 
+Path found with total cost of 55 in 0.0 seconds
+Search nodes expanded: 1127
+Pacman emerges victorious! Score: 456
+Average Score: 456.0
+Scores:        456.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (19, 19)
+Goal (1, 1)
+====dstaropt
+21 0:00:00.048998 153 64 
+Path found with total cost of 153 in 0.0 seconds
+Search nodes expanded: 3512
+Pacman emerges victorious! Score: 358
+Average Score: 358.0
+Scores:        358.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (29, 1)
+Goal (1, 1)
+====dstaropt
+31 0:00:00.097999 185 85 
+Path found with total cost of 185 in 0.1 seconds
+Search nodes expanded: 3946
+Pacman emerges victorious! Score: 326
+Average Score: 326.0
+Scores:        326.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 29)
+Goal (1, 1)
+====dstaropt
+31 0:00:00.053999 117 51 
+Path found with total cost of 117 in 0.1 seconds
+Search nodes expanded: 2379
+Pacman emerges victorious! Score: 394
+Average Score: 394.0
+Scores:        394.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (29, 29)
+Goal (1, 1)
+====dstaropt
+31 0:00:00.147000 269 131 
+Path found with total cost of 269 in 0.1 seconds
+Search nodes expanded: 7286
+Pacman emerges victorious! Score: 242
+Average Score: 242.0
+Scores:        242.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (39, 1)
+Goal (1, 1)
+====dstaropt
+41 0:00:00.088999 127 54 
+Path found with total cost of 127 in 0.1 seconds
+Search nodes expanded: 3702
+Pacman emerges victorious! Score: 384
+Average Score: 384.0
+Scores:        384.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 39)
+Goal (1, 1)
+====dstaropt
+41 0:00:00.476516 513 228 
+Path found with total cost of 513 in 0.5 seconds
+Search nodes expanded: 12155
+Pacman emerges victorious! Score: -2
+Average Score: -2.0
+Scores:        -2.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (39, 39)
+Goal (1, 1)
+====dstaropt
+41 0:00:00.480000 521 224 
+Path found with total cost of 521 in 0.5 seconds
+Search nodes expanded: 17023
+Pacman emerges victorious! Score: -10
+Average Score: -10.0
+Scores:        -10.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (49, 1)
+Goal (1, 1)
+====dstaropt
+51 0:00:00.245000 285 117 
+Path found with total cost of 285 in 0.2 seconds
+Search nodes expanded: 5510
+Pacman emerges victorious! Score: 226
+Average Score: 226.0
+Scores:        226.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 49)
+Goal (1, 1)
+====dstaropt
+51 0:00:00.210519 231 96 
+Path found with total cost of 231 in 0.2 seconds
+Search nodes expanded: 5132
+Pacman emerges victorious! Score: 280
+Average Score: 280.0
+Scores:        280.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (49, 49)
+Goal (1, 1)
+====dstaropt
+51 0:00:00.558514 527 226 
+Path found with total cost of 527 in 0.6 seconds
+Search nodes expanded: 18573
+Pacman emerges victorious! Score: -16
+Average Score: -16.0
+Scores:        -16.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (59, 1)
+Goal (1, 1)
+====dstaropt
+61 0:00:00.370024 271 141 
+Path found with total cost of 271 in 0.4 seconds
+Search nodes expanded: 8316
+Pacman emerges victorious! Score: 240
+Average Score: 240.0
+Scores:        240.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 59)
+Goal (1, 1)
+====dstaropt
+61 0:00:00.851036 519 259 
+Path found with total cost of 519 in 0.9 seconds
+Search nodes expanded: 17366
+Pacman emerges victorious! Score: -8
+Average Score: -8.0
+Scores:        -8.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (59, 59)
+Goal (1, 1)
+====dstaropt
+61 0:00:00.540000 345 151 
+Path found with total cost of 345 in 0.5 seconds
+Search nodes expanded: 21856
+Pacman emerges victorious! Score: 166
+Average Score: 166.0
+Scores:        166.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (69, 1)
+Goal (1, 1)
+====dstaropt
+71 0:00:01.489535 749 356 
+Path found with total cost of 749 in 1.5 seconds
+Search nodes expanded: 21028
+Pacman emerges victorious! Score: -238
+Average Score: -238.0
+Scores:        -238.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 69)
+Goal (1, 1)
+====dstaropt
+71 0:00:02.147000 895 431 
+Path found with total cost of 895 in 2.1 seconds
+Search nodes expanded: 33665
+Pacman emerges victorious! Score: -384
+Average Score: -384.0
+Scores:        -384.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (69, 69)
+Goal (1, 1)
+====dstaropt
+71 0:00:00.902000 477 228 
+Path found with total cost of 477 in 0.9 seconds
+Search nodes expanded: 29153
+Pacman emerges victorious! Score: 34
+Average Score: 34.0
+Scores:        34.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (79, 1)
+Goal (1, 1)
+====dstaropt
+81 0:00:03.317070 1163 550 
+Path found with total cost of 1163 in 3.3 seconds
+Search nodes expanded: 38250
+Pacman emerges victorious! Score: -652
+Average Score: -652.0
+Scores:        -652.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 79)
+Goal (1, 1)
+====dstaropt
+81 0:00:05.185627 1675 792 
+Path found with total cost of 1675 in 5.2 seconds
+Search nodes expanded: 52052
+Pacman emerges victorious! Score: -1164
+Average Score: -1164.0
+Scores:        -1164.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (79, 79)
+Goal (1, 1)
+====dstaropt
+81 0:00:06.627697 2081 950 
+Path found with total cost of 2081 in 6.6 seconds
+Search nodes expanded: 77330
+Pacman emerges victorious! Score: -1570
+Average Score: -1570.0
+Scores:        -1570.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (89, 1)
+Goal (1, 1)
+====dstaropt
+91 0:00:00.956058 397 173 
+Path found with total cost of 397 in 1.0 seconds
+Search nodes expanded: 10394
+Pacman emerges victorious! Score: 114
+Average Score: 114.0
+Scores:        114.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 89)
+Goal (1, 1)
+====dstaropt
+91 0:00:12.530437 2813 1224 
+Path found with total cost of 2813 in 12.5 seconds
+Search nodes expanded: 96849
+Pacman emerges victorious! Score: -2302
+Average Score: -2302.0
+Scores:        -2302.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (89, 89)
+Goal (1, 1)
+====dstaropt
+91 0:00:08.987876 2459 1055 
+Path found with total cost of 2459 in 9.0 seconds
+Search nodes expanded: 94971
+Pacman emerges victorious! Score: -1948
+Average Score: -1948.0
+Scores:        -1948.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (99, 1)
+Goal (1, 1)
+====dstaropt
+101 0:00:09.580411 2119 1012 
+Path found with total cost of 2119 in 9.6 seconds
+Search nodes expanded: 66171
+Pacman emerges victorious! Score: -1608
+Average Score: -1608.0
+Scores:        -1608.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 99)
+Goal (1, 1)
+====dstaropt
+101 0:00:05.244574 1297 603 
+Path found with total cost of 1297 in 5.2 seconds
+Search nodes expanded: 51427
+Pacman emerges victorious! Score: -786
+Average Score: -786.0
+Scores:        -786.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstaropt and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (99, 99)
+Goal (1, 1)
+====dstaropt
+101 0:00:21.933889 4207 1863 
+Path found with total cost of 4207 in 21.9 seconds
+Search nodes expanded: 143945
+Pacman emerges victorious! Score: -3696
+Average Score: -3696.0
+Scores:        -3696.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (9, 1)
+Goal (1, 1)
+====dstar
+11 0:00:00.007998 45 18 
+Path found with total cost of 45 in 0.0 seconds
+Search nodes expanded: 780
+Pacman emerges victorious! Score: 466
+Average Score: 466.0
+Scores:        466.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 9)
+Goal (1, 1)
+====dstar
+11 0:00:00.000999 13 2 
+Path found with total cost of 13 in 0.0 seconds
+Search nodes expanded: 137
+Pacman emerges victorious! Score: 498
+Average Score: 498.0
+Scores:        498.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (9, 9)
+Goal (1, 1)
+====dstar
+11 0:00:00.005999 41 16 
+Path found with total cost of 41 in 0.0 seconds
+Search nodes expanded: 723
+Pacman emerges victorious! Score: 470
+Average Score: 470.0
+Scores:        470.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (19, 1)
+Goal (1, 1)
+====dstar
+21 0:00:00.012999 43 16 
+Path found with total cost of 43 in 0.0 seconds
+Search nodes expanded: 967
+Pacman emerges victorious! Score: 468
+Average Score: 468.0
+Scores:        468.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 19)
+Goal (1, 1)
+====dstar
+21 0:00:00.017000 55 21 
+Path found with total cost of 55 in 0.0 seconds
+Search nodes expanded: 1240
+Pacman emerges victorious! Score: 456
+Average Score: 456.0
+Scores:        456.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (19, 19)
+Goal (1, 1)
+====dstar
+21 0:00:00.050001 153 64 
+Path found with total cost of 153 in 0.1 seconds
+Search nodes expanded: 3727
+Pacman emerges victorious! Score: 358
+Average Score: 358.0
+Scores:        358.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (29, 1)
+Goal (1, 1)
+====dstar
+31 0:00:00.099000 185 85 
+Path found with total cost of 185 in 0.1 seconds
+Search nodes expanded: 4536
+Pacman emerges victorious! Score: 326
+Average Score: 326.0
+Scores:        326.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 29)
+Goal (1, 1)
+====dstar
+31 0:00:00.055999 117 51 
+Path found with total cost of 117 in 0.1 seconds
+Search nodes expanded: 2673
+Pacman emerges victorious! Score: 394
+Average Score: 394.0
+Scores:        394.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (29, 29)
+Goal (1, 1)
+====dstar
+31 0:00:00.152000 269 131 
+Path found with total cost of 269 in 0.2 seconds
+Search nodes expanded: 7978
+Pacman emerges victorious! Score: 242
+Average Score: 242.0
+Scores:        242.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (39, 1)
+Goal (1, 1)
+====dstar
+41 0:00:00.091000 127 54 
+Path found with total cost of 127 in 0.1 seconds
+Search nodes expanded: 4042
+Pacman emerges victorious! Score: 384
+Average Score: 384.0
+Scores:        384.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 39)
+Goal (1, 1)
+====dstar
+41 0:00:00.481000 513 228 
+Path found with total cost of 513 in 0.5 seconds
+Search nodes expanded: 13688
+Pacman emerges victorious! Score: -2
+Average Score: -2.0
+Scores:        -2.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (39, 39)
+Goal (1, 1)
+====dstar
+41 0:00:00.501999 521 224 
+Path found with total cost of 521 in 0.5 seconds
+Search nodes expanded: 18294
+Pacman emerges victorious! Score: -10
+Average Score: -10.0
+Scores:        -10.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (49, 1)
+Goal (1, 1)
+====dstar
+51 0:00:00.263000 285 117 
+Path found with total cost of 285 in 0.3 seconds
+Search nodes expanded: 6291
+Pacman emerges victorious! Score: 226
+Average Score: 226.0
+Scores:        226.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 49)
+Goal (1, 1)
+====dstar
+51 0:00:00.204000 231 96 
+Path found with total cost of 231 in 0.2 seconds
+Search nodes expanded: 5566
+Pacman emerges victorious! Score: 280
+Average Score: 280.0
+Scores:        280.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (49, 49)
+Goal (1, 1)
+====dstar
+51 0:00:00.572000 527 226 
+Path found with total cost of 527 in 0.6 seconds
+Search nodes expanded: 19863
+Pacman emerges victorious! Score: -16
+Average Score: -16.0
+Scores:        -16.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (59, 1)
+Goal (1, 1)
+====dstar
+61 0:00:00.365000 271 141 
+Path found with total cost of 271 in 0.4 seconds
+Search nodes expanded: 8958
+Pacman emerges victorious! Score: 240
+Average Score: 240.0
+Scores:        240.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 59)
+Goal (1, 1)
+====dstar
+61 0:00:00.863000 519 259 
+Path found with total cost of 519 in 0.9 seconds
+Search nodes expanded: 18726
+Pacman emerges victorious! Score: -8
+Average Score: -8.0
+Scores:        -8.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (59, 59)
+Goal (1, 1)
+====dstar
+61 0:00:00.522535 345 151 
+Path found with total cost of 345 in 0.5 seconds
+Search nodes expanded: 22291
+Pacman emerges victorious! Score: 166
+Average Score: 166.0
+Scores:        166.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (69, 1)
+Goal (1, 1)
+====dstar
+71 0:00:01.519000 749 356 
+Path found with total cost of 749 in 1.5 seconds
+Search nodes expanded: 23288
+Pacman emerges victorious! Score: -238
+Average Score: -238.0
+Scores:        -238.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 69)
+Goal (1, 1)
+====dstar
+71 0:00:02.190034 895 431 
+Path found with total cost of 895 in 2.2 seconds
+Search nodes expanded: 36464
+Pacman emerges victorious! Score: -384
+Average Score: -384.0
+Scores:        -384.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (69, 69)
+Goal (1, 1)
+====dstar
+71 0:00:00.945601 477 228 
+Path found with total cost of 477 in 0.9 seconds
+Search nodes expanded: 30130
+Pacman emerges victorious! Score: 34
+Average Score: 34.0
+Scores:        34.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (79, 1)
+Goal (1, 1)
+====dstar
+81 0:00:03.434137 1163 550 
+Path found with total cost of 1163 in 3.4 seconds
+Search nodes expanded: 41828
+Pacman emerges victorious! Score: -652
+Average Score: -652.0
+Scores:        -652.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 79)
+Goal (1, 1)
+====dstar
+81 0:00:05.318093 1675 792 
+Path found with total cost of 1675 in 5.3 seconds
+Search nodes expanded: 57129
+Pacman emerges victorious! Score: -1164
+Average Score: -1164.0
+Scores:        -1164.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (79, 79)
+Goal (1, 1)
+====dstar
+81 0:00:06.835146 2081 950 
+Path found with total cost of 2081 in 6.8 seconds
+Search nodes expanded: 82863
+Pacman emerges victorious! Score: -1570
+Average Score: -1570.0
+Scores:        -1570.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (89, 1)
+Goal (1, 1)
+====dstar
+91 0:00:00.984024 397 173 
+Path found with total cost of 397 in 1.0 seconds
+Search nodes expanded: 11617
+Pacman emerges victorious! Score: 114
+Average Score: 114.0
+Scores:        114.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 89)
+Goal (1, 1)
+====dstar
+91 0:00:12.582846 2813 1224 
+Path found with total cost of 2813 in 12.6 seconds
+Search nodes expanded: 105106
+Pacman emerges victorious! Score: -2302
+Average Score: -2302.0
+Scores:        -2302.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (89, 89)
+Goal (1, 1)
+====dstar
+91 0:00:09.310167 2459 1055 
+Path found with total cost of 2459 in 9.3 seconds
+Search nodes expanded: 101643
+Pacman emerges victorious! Score: -1948
+Average Score: -1948.0
+Scores:        -1948.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (99, 1)
+Goal (1, 1)
+====dstar
+101 0:00:09.803995 2119 1012 
+Path found with total cost of 2119 in 9.8 seconds
+Search nodes expanded: 73186
+Pacman emerges victorious! Score: -1608
+Average Score: -1608.0
+Scores:        -1608.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (1, 99)
+Goal (1, 1)
+====dstar
+101 0:00:05.256653 1297 603 
+Path found with total cost of 1297 in 5.3 seconds
+Search nodes expanded: 55074
+Pacman emerges victorious! Score: -786
+Average Score: -786.0
+Scores:        -786.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+[SearchAgent] using function dstar and heuristic manhattanHeuristic
+[SearchAgent] using problem type PositionSearchProblem
+Start (99, 99)
+Goal (1, 1)
+====dstar
+101 0:00:22.618770 4207 1863 
+Path found with total cost of 4207 in 22.6 seconds
+Search nodes expanded: 155629
+Pacman emerges victorious! Score: -3696
+Average Score: -3696.0
+Scores:        -3696.0
+Win Rate:      1/1 (1.00)
+Record:        Win

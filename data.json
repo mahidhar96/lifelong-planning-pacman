@@ -1,0 +1,450 @@
+{
+    "dstar": {
+        "bottomright": {
+            "mazes": [
+                "maze_10_bottomright.lay",
+                "maze_20_bottomright.lay",
+                "maze_30_bottomright.lay",
+                "maze_40_bottomright.lay",
+                "maze_50_bottomright.lay",
+                "maze_60_bottomright.lay",
+                "maze_70_bottomright.lay",
+                "maze_80_bottomright.lay",
+                "maze_90_bottomright.lay",
+                "maze_100_bottomright.lay"
+            ],
+            "shape": [
+                10,
+                20,
+                30,
+                40,
+                50,
+                60,
+                70,
+                80,
+                90,
+                100
+            ],
+            "time": [
+                0.007998,
+                0.012999,
+                0.099,
+                0.091,
+                0.263,
+                0.365,
+                1.519,
+                3.434137,
+                0.984024,
+                9.803995
+            ],
+            "actions": [
+                45,
+                43,
+                185,
+                127,
+                285,
+                271,
+                749,
+                1163,
+                397,
+                2119
+            ],
+            "obstacles": [
+                18,
+                16,
+                85,
+                54,
+                117,
+                141,
+                356,
+                550,
+                173,
+                1012
+            ],
+            "nodes": [
+                780,
+                967,
+                4536,
+                4042,
+                6291,
+                8958,
+                23288,
+                41828,
+                11617,
+                73186
+            ]
+        },
+        "topleft": {
+            "mazes": [
+                "maze_10_topleft.lay",
+                "maze_20_topleft.lay",
+                "maze_30_topleft.lay",
+                "maze_40_topleft.lay",
+                "maze_50_topleft.lay",
+                "maze_60_topleft.lay",
+                "maze_70_topleft.lay",
+                "maze_80_topleft.lay",
+                "maze_90_topleft.lay",
+                "maze_100_topleft.lay"
+            ],
+            "shape": [
+                10,
+                20,
+                30,
+                40,
+                50,
+                60,
+                70,
+                80,
+                90,
+                100
+            ],
+            "time": [
+                0.000999,
+                0.017,
+                0.055999,
+                0.481,
+                0.204,
+                0.863,
+                2.190034,
+                5.318093,
+                12.582846,
+                5.256653
+            ],
+            "actions": [
+                13,
+                55,
+                117,
+                513,
+                231,
+                519,
+                895,
+                1675,
+                2813,
+                1297
+            ],
+            "obstacles": [
+                2,
+                21,
+                51,
+                228,
+                96,
+                259,
+                431,
+                792,
+                1224,
+                603
+            ],
+            "nodes": [
+                137,
+                1240,
+                2673,
+                13688,
+                5566,
+                18726,
+                36464,
+                57129,
+                105106,
+                55074
+            ]
+        },
+        "topright": {
+            "mazes": [
+                "maze_10_topright.lay",
+                "maze_20_topright.lay",
+                "maze_30_topright.lay",
+                "maze_40_topright.lay",
+                "maze_50_topright.lay",
+                "maze_60_topright.lay",
+                "maze_70_topright.lay",
+                "maze_80_topright.lay",
+                "maze_90_topright.lay",
+                "maze_100_topright.lay"
+            ],
+            "shape": [
+                10,
+                20,
+                30,
+                40,
+                50,
+                60,
+                70,
+                80,
+                90,
+                100
+            ],
+            "time": [
+                0.005999,
+                0.050001,
+                0.152,
+                0.501999,
+                0.572,
+                0.522535,
+                0.945601,
+                6.835146,
+                9.310167,
+                22.61877
+            ],
+            "actions": [
+                41,
+                153,
+                269,
+                521,
+                527,
+                345,
+                477,
+                2081,
+                2459,
+                4207
+            ],
+            "obstacles": [
+                16,
+                64,
+                131,
+                224,
+                226,
+                151,
+                228,
+                950,
+                1055,
+                1863
+            ],
+            "nodes": [
+                723,
+                3727,
+                7978,
+                18294,
+                19863,
+                22291,
+                30130,
+                82863,
+                101643,
+                155629
+            ]
+        }
+    },
+    "dstaropt": {
+        "bottomright": {
+            "mazes": [
+                "maze_10_bottomright.lay",
+                "maze_20_bottomright.lay",
+                "maze_30_bottomright.lay",
+                "maze_40_bottomright.lay",
+                "maze_50_bottomright.lay",
+                "maze_60_bottomright.lay",
+                "maze_70_bottomright.lay",
+                "maze_80_bottomright.lay",
+                "maze_90_bottomright.lay",
+                "maze_100_bottomright.lay"
+            ],
+            "shape": [
+                10,
+                20,
+                30,
+                40,
+                50,
+                60,
+                70,
+                80,
+                90,
+                100
+            ],
+            "time": [
+                0.007,
+                0.011998,
+                0.097999,
+                0.088999,
+                0.245,
+                0.370024,
+                1.489535,
+                3.31707,
+                0.956058,
+                9.580411
+            ],
+            "actions": [
+                45,
+                43,
+                185,
+                127,
+                285,
+                271,
+                749,
+                1163,
+                397,
+                2119
+            ],
+            "obstacles": [
+                18,
+                16,
+                85,
+                54,
+                117,
+                141,
+                356,
+                550,
+                173,
+                1012
+            ],
+            "nodes": [
+                627,
+                874,
+                3946,
+                3702,
+                5510,
+                8316,
+                21028,
+                38250,
+                10394,
+                66171
+            ]
+        },
+        "topleft": {
+            "mazes": [
+                "maze_10_topleft.lay",
+                "maze_20_topleft.lay",
+                "maze_30_topleft.lay",
+                "maze_40_topleft.lay",
+                "maze_50_topleft.lay",
+                "maze_60_topleft.lay",
+                "maze_70_topleft.lay",
+                "maze_80_topleft.lay",
+                "maze_90_topleft.lay",
+                "maze_100_topleft.lay"
+            ],
+            "shape": [
+                10,
+                20,
+                30,
+                40,
+                50,
+                60,
+                70,
+                80,
+                90,
+                100
+            ],
+            "time": [
+                0.001,
+                0.015998,
+                0.053999,
+                0.476516,
+                0.210519,
+                0.851036,
+                2.147,
+                5.185627,
+                12.530437,
+                5.244574
+            ],
+            "actions": [
+                13,
+                55,
+                117,
+                513,
+                231,
+                519,
+                895,
+                1675,
+                2813,
+                1297
+            ],
+            "obstacles": [
+                2,
+                21,
+                51,
+                228,
+                96,
+                259,
+                431,
+                792,
+                1224,
+                603
+            ],
+            "nodes": [
+                120,
+                1127,
+                2379,
+                12155,
+                5132,
+                17366,
+                33665,
+                52052,
+                96849,
+                51427
+            ]
+        },
+        "topright": {
+            "mazes": [
+                "maze_10_topright.lay",
+                "maze_20_topright.lay",
+                "maze_30_topright.lay",
+                "maze_40_topright.lay",
+                "maze_50_topright.lay",
+                "maze_60_topright.lay",
+                "maze_70_topright.lay",
+                "maze_80_topright.lay",
+                "maze_90_topright.lay",
+                "maze_100_topright.lay"
+            ],
+            "shape": [
+                10,
+                20,
+                30,
+                40,
+                50,
+                60,
+                70,
+                80,
+                90,
+                100
+            ],
+            "time": [
+                0.005999,
+                0.048998,
+                0.147,
+                0.48,
+                0.558514,
+                0.54,
+                0.902,
+                6.627697,
+                8.987876,
+                21.933889
+            ],
+            "actions": [
+                41,
+                153,
+                269,
+                521,
+                527,
+                345,
+                477,
+                2081,
+                2459,
+                4207
+            ],
+            "obstacles": [
+                16,
+                64,
+                131,
+                224,
+                226,
+                151,
+                228,
+                950,
+                1055,
+                1863
+            ],
+            "nodes": [
+                633,
+                3512,
+                7286,
+                17023,
+                18573,
+                21856,
+                29153,
+                77330,
+                94971,
+                143945
+            ]
+        }
+    }
+}
